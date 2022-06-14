@@ -1,11 +1,10 @@
 <script>
+    import {FeedbackStore} from '../stores'
     import Button from "./Button.svelte";
     import RatingSelect from "./RatingSelect.svelte"
     import Card from "../components/ui/Card.svelte"
-    import {createEventDispatcher} from 'svelte'
     import {v4 as uuidv4} from 'uuid'
 
-    const dispatch = createEventDispatcher();
     let text=''
     let rating=10;
     let btnDisabled=true
@@ -33,7 +32,9 @@
                 text
             }
             // console.log(newFeedback)
-            dispatch('create-newfeedback',newFeedback)
+            FeedbackStore.update((currentFeedback)=>{
+                return [newFeedback,...currentFeedback]
+            })
             text=''
         }
     }
